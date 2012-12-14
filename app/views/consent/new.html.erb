@@ -1,0 +1,8 @@
+<h1>consent</h1>
+<p>Hi <%= @user.fname %> <%= @user.lname %>!</p>
+<p>Please consent to continue with study.</p>
+
+<%= form_tag('/consent/'+params[:id], :method => :put) do -%>
+    <%= submit_tag  'I agree' %>
+    <%= submit_tag  'No thanks' %>
+<% end -%>

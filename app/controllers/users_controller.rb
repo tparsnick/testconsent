@@ -37,16 +37,16 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
   
-  # GET /users/1/consentcheck
-  def consentcheck
-    @user = User.find(params[:id])
-    if @user.consented_at.nil?
-      render "consent"
-    else
-      #render "/home/index"
-      redirect_to :controller=>'home', :action => 'show', :id => @user.id
-    end
-  end
+  # # GET /users/1/consentcheck
+  # def consentcheck
+  #   @user = User.find(params[:id])
+  #   if @user.consented_at.nil?
+  #     render "consent"
+  #   else
+  #     #render "/home/index"
+  #     redirect_to :controller=>'home', :action => 'show', :id => @user.id
+  #   end
+  # end
 
   # POST /users
   # POST /users.json
@@ -70,15 +70,6 @@ class UsersController < ApplicationController
   # PUT /users/1.json
   def update
     @user = User.find(params[:id])
-    
-    if params[:commit] == 'I agree'
-        User.update(@user.id, :consented_at=>DateTime.now)
-        #redirect_to home_index_url
-        redirect_to :controller=>'home', :action => 'show', :id => @user.id
-
-    elsif params[:commit] == 'No thanks'
-        render "nothanks"
-    else
 
         respond_to do |format|
           if @user.update_attributes(params[:user])
@@ -89,8 +80,32 @@ class UsersController < ApplicationController
             format.json { render json: @user.errors, status: :unprocessable_entity }
           end
         end
-    end  
+
   end
+  
+  # def update
+  #   @user = User.find(params[:id])
+  #   
+  #   if params[:commit] == 'I agree'
+  #       User.update(@user.id, :consented_at=>DateTime.now)
+  #       #redirect_to home_index_url
+  #       redirect_to :controller=>'home', :action => 'show', :id => @user.id
+  # 
+  #   elsif params[:commit] == 'No thanks'
+  #       render "nothanks"
+  #   else
+  # 
+  #       respond_to do |format|
+  #         if @user.update_attributes(params[:user])
+  #           format.html { redirect_to @user, notice: 'User was successfully updated.' }
+  #           format.json { head :no_content }
+  #         else
+  #           format.html { render action: "edit" }
+  #           format.json { render json: @user.errors, status: :unprocessable_entity }
+  #         end
+  #       end
+  #   end  
+  # end
 
   # DELETE /users/1
   # DELETE /users/1.json

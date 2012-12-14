@@ -1,12 +1,17 @@
 Testconsent::Application.routes.draw do
+
   #get "home/index"
-   get "landing/index"
-   match 'home/:id' => 'home#show', :as => 'home', :via => :get
+  get "landing/index"
+  match 'home/:id' => 'home#show', :as => 'home', :via => :get
   resources :users
   #match 'orders' => 'orders#index', :as => 'orders'
 
   root :to => "users#index"
-  match 'users/:id/consentcheck' => 'users#consentcheck', :as => 'consent_user', :via => :get
+  #match 'users/:id/consentcheck' => 'users#consentcheck', :as => 'consent_user', :via => :get
+  
+  match 'consent/:id/check' => 'consent#check', :as => 'check_consent', :via => :get
+  match 'consent/:id/new' => 'consent#new', :as => 'new_consent', :via => :get
+  match 'consent/:id' => 'consent#update', :via => :put 
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
